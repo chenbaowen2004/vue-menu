@@ -24,6 +24,9 @@ export class MenubaritemType extends Vue {
     @Inject(MENU_STYLE_KEY)
     private menuStyle!: MenuStyle
 
+    @Prop({ type: Boolean, default: false })
+    disabled!: boolean
+
     private hover = false
     private isOpen = false
 
@@ -50,8 +53,12 @@ export class MenubaritemType extends Vue {
         }, 200)
     }
 
+    // get style() {
+    //     return this.active ? this.menuStyle.active : {}
+    // }
     get style() {
-        return this.active ? this.menuStyle.active : {}
+        const { active, disabled } = this.menuStyle
+        return { ...(this.active ? active : {}), ...(this.disabled ? disabled : {}) }
     }
 
     get paddingTop() {
@@ -70,20 +77,20 @@ export class MenubaritemType extends Vue {
     }
 
     private mousedown() {
-        sync.lock(async () => {
+        this.disabled || sync.lock(async () => {
             this.activate()
         })
     }
 
     private mouseenter() {
-        sync.lock(async () => {
+        this.disabled || sync.lock(async () => {
             this.hover = true
             this.menubar.active && this.activate()
         })
     }
 
     private mouseleave() {
-        sync.lock(async () => {
+        this.disabled || sync.lock(async () => {
             this.hover = false
         })
     }
