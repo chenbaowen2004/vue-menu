@@ -2,6 +2,8 @@ const { VueLoaderPlugin } = require('vue-loader')
 const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
+    mode: 'development', //development, production or none
+    devtool: 'inline-source-map',//inline-source-map, none
     entry: [
         'es6-promise/auto',
         './src/index.ts',

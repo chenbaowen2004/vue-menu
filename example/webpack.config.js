@@ -1,6 +1,8 @@
 const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
+    mode: 'development', //development, production or none
+    devtool: 'inline-source-map',//inline-source-map, none
     entry: [
         "es6-promise/auto",
         "./src/main.ts",
